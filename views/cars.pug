@@ -1,0 +1,14 @@
+extends layout
+ 
+block content
+  //- Add a heading for the page
+  h1 Search Results for Cars
+ 
+  div.container-fluid
+    div.row
+      //- Iterate over each item in results (passed from cars.js) and display in a col-sm-2 div
+      each car in results
+        div.col-sm-3
+          h5 Car name: #{car.car_name}
+          p Model: #{car.model}
+          p power: #{car.power} HP
