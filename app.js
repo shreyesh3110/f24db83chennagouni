@@ -11,6 +11,13 @@ const randomitemRouter = require('./routes/randomitem');
 const searchResultsRouter = require('./routes/searchresults');  // Correct import for searchResultsRouter
  
 var app = express();
+
+//Get the default connection
+var db = mongoose.connection;
+//Bind connection to error event
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+db.once("open", function(){
+console.log("Connection to DB succeeded")});
  
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -29,7 +36,12 @@ app.use('/cars', carsRouter);
 app.use('/', gridRouter);           // Grid route
 app.use('/', randomitemRouter);     // Random item route
 app.use('/searchresults', searchResultsRouter);  // Correct usage of searchResultsRouter
- 
+
+require('dotenv').config();
+const connectionString = process.env.MONGO_CON
+mongoose = require('mongoose');
+mongoose.connect(connectionString);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
