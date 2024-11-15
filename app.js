@@ -9,14 +9,16 @@ const connectionString = process.env.MONGO_CON
 mongoose = require('mongoose');
 mongoose.connect(connectionString);
 
-const carsRouter = require('./routes/cars');
+var carsRouter = require('./routes/cars');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-const gridRouter = require('./routes/grid');
-const randomitemRouter = require('./routes/randomitem');
-const searchResultsRouter = require('./routes/searchresults');  // Correct import for searchResultsRouter
-var resourceRouter = require('./routes/resource') //step 4
- 
+var gridRouter = require('./routes/grid');
+var randomitemRouter = require('./routes/randomitem');
+var searchResultsRouter = require('./routes/searchresults');  // Correct import for searchResultsRouter
+var resourceRouter = require('./routes/resource'); //step 4
+var car = require("./models/car");
+//var Car = require('./models/car'); // Step exeperiment
+
 var app = express();
 
 
@@ -35,12 +37,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);          // Home route
 app.use('/users', usersRouter);     // Users route
 app.use('/cars', carsRouter);
-app.use('/', gridRouter);           // Grid route
-app.use('/', randomitemRouter);     // Random item route
+app.use('/grid', gridRouter);           // Grid route
+app.use('/random', randomitemRouter);     // Random item route
 app.use('/searchresults', searchResultsRouter);  // Correct usage of searchResultsRouter
-app.use('/resource', resourceRouter)// stpe 4
+app.use('/resource', resourceRouter)// step 4
+//app.use('/car', carRouter)
 
-var Car = require("./models/car");
+
 const car = require('./models/car');
 
 // catch 404 and forward to error handler
@@ -69,9 +72,9 @@ console.log("Connection to DB succeeded")});
 async function recreateDB(){
 // Delete everything
 await car.deleteMany();
-let instance1 = new Car({car_name:"Camry", model:'sedan', power:200});
-let instance2 = new Car({car_name:"F150", model:'truck', power:800});
-let instance3 = new Car({car_name:"Wrangler", model:'SUV', power:400});
+let instance1 = new car({car_name:"Camry", model:'sedan', power:200});
+let instance2 = new car({car_name:"F150", model:'truck', power:800});
+let instance3 = new car({car_name:"Wrangler", model:'SUV', power:400});
 instance1.save().then(doc=>{
 console.log("First object saved")}
 ).catch(err=>{

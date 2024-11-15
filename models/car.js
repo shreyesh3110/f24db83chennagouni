@@ -4,5 +4,4 @@ car_name: String,
 model: String,
 power: Number
 })
-module.exports = mongoose.model("Car",
-carSchema)
+module.exports = mongoose.model("Car",carSchema)
