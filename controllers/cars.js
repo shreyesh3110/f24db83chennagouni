@@ -71,9 +71,22 @@ exports.car_list = async function(req, res) {
   }
 };
   
-exports.car_detail = function(req, res) {
-  res.send('NOT IMPLEMENTED: Car detail: ' + req.params.id);
-};
+// exports.car_detail = function(req, res) {
+//   res.send('NOT IMPLEMENTED: Car detail: ' + req.params.id);
+// };
+
+//read one
+exports.car_detail = async function(req, res) {
+    console.log("detail" + req.params.id);
+    try {
+        let result = await Car.findById(req.params.id);
+        res.send(result);
+    } catch (error) {
+        res.status(500);
+        res.send(`{"error": document for id ${req.params.id} not found`);
+    }
+  };
+  
 
 exports.car_create_post = async function(req, res) {
   let document = new Car();
@@ -89,6 +102,19 @@ exports.car_create_post = async function(req, res) {
   }
 };
 
+exports.car_update_get = async function(req, res) {
+    try {
+        const car = await Car.findById(req.params.id);
+        if (!car) {
+            res.status(404).send('Car not found');
+            return;
+        }
+        res.render('car_update', { car });
+    } catch (err) {
+        res.status(500).send(`Error: ${err}`);
+    }
+  };
+  
 
 exports.car_delete = function(req, res) {
   res.send('NOT IMPLEMENTED: Car delete DELETE ' + req.params.id);
