@@ -36,7 +36,8 @@ router.get('/:id', car_controller.car_detail);
 
 router.get('/:id', car_controller.car_update_get);
 
-router.post('/', car_controller.car_create_post);
+router.put('/:id', car_controller.car_update_put);
+// router.post('/', car_controller.car_create_post);
 
 //router.get('/:id/update', car_controller.car_update_get);
 
