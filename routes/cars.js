@@ -38,9 +38,16 @@ router.get('/:id', car_controller.car_update_get);
 
 router.put('/:id', car_controller.car_update_put);
 
-router.get('/:id', car_controller.car_delete_get);
+// router.get('/:id', car_controller.car_delete_get);
 
 router.delete('/:id', car_controller.car_delete);
+
+/* GET detail car page */
+router.get('/detail', car_controller.car_view_one_Page);
+
+
+
+
 // router.post('/', car_controller.car_create_post);
 
 //router.get('/:id/update', car_controller.car_update_get);

@@ -134,18 +134,18 @@ exports.car_update_put = async function(req, res) {
     }
   };
   
-  exports.car_delete_get = async function(req, res) {
-    try {
-        const car = await Car.findById(req.params.id);
-        if (!car) {
-            res.status(404).send('Car not found');
-            return;
-        }
-        res.render('car_delete', { car });
-    } catch (err) {
-        res.status(500).send(`Error: ${err}`);
-    }
-  };
+//   exports.car_delete_get = async function(req, res) {
+//     try {
+//         const car = await Car.findById(req.params.id);
+//         if (!car) {
+//             res.status(404).send('Car not found');
+//             return;
+//         }
+//         res.render('car_delete', { car });
+//     } catch (err) {
+//         res.status(500).send(`Error: ${err}`);
+//     }
+//   };
 
 //delete one
 exports.car_delete = async function(req, res) {
@@ -168,3 +168,17 @@ exports.car_delete = async function(req, res) {
 // exports.car_update_put = function(req, res) {
 //   res.send('NOT IMPLEMENTED: Car update PUT ' + req.params.id);
 // };
+
+// Handle a show one view with id specified by query
+exports.car_view_one_Page = async function(req, res) {
+    console.log("single view for id " + req.query.id)
+    try{
+    result = await Car.findById( req.query.id)
+    res.render('carsdetail',
+    { title: 'Car Detail', toShow: result });
+    }
+    catch(err){
+    res.status(500)
+    res.send(`{'error': '${err}'}`);
+    }
+    };
