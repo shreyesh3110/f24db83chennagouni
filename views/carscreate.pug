@@ -1,0 +1,30 @@
+extends layout
+
+block content
+  h1= title
+  form(id='CarForm', action="/resource/cars", method="POST")
+    div.form-group
+      label.carAttr(for='car_name') Car Name
+      input#car_name(type='text', name='car_name')
+    div.form-group
+      label.carAttr(for='model') Model
+      input#model(type='text', name='model')
+    div.form-group
+      label.carAttr(for='power') Power
+      input#power(type='number', name='power')
+    input(type="submit")
+  script.
+    document.forms['CarForm'].addEventListener('submit', (event) => {
+      event.preventDefault();
+      fetch(event.target.action, {
+        method: 'POST',
+        body: new URLSearchParams(new FormData(event.target))
+      }).then((resp) => {
+        return resp.json();
+      }).then((body) => {
+        alert("Save succeeded");
+      }).catch((error) => {
+        alert("Save failed " + error);
+      });
+    });
+    

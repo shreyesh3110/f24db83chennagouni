@@ -1,0 +1,53 @@
+ extends layout
+
+block content
+    h1 Car Update
+
+    if (toShow == null)
+        h2 No instance found to update
+    else
+        - let carid = toShow._id
+        - let name = toShow.car_name
+        - let carspower = toShow.power
+        - let carsmodel = toShow.model
+
+        div.row.mb-3
+            div.mr-1.font-weight-bold ID is:
+            div #{carid}
+
+        - let actionid = "/resource/cars/" + carid
+        form(id='carsForm', action=actionid, method="PUT")
+            div.form-group
+                label.carAttr(for='car_name') Car Name:
+                input#car_name(type='text', name='car_name', value=name, class='form-control')
+            div.form-group
+                label.carAttr(for='model') Car Model:
+                input#model(type='text', name='model', value=carsmodel, class='form-control')
+            div.form-group
+                label.carAttr(for='power') Car Power:
+                input#power(type='text', name='power', value=carspower, class='form-control')
+            input(type="submit", class="btn btn-primary mt-2")
+
+        button(class="btn btn-secondary mt-2 ml-2" onclick="goBack()") Cancel
+
+    script.
+        function goBack() {
+            window.location.href = "/cars";
+        }
+
+    script.
+        document.forms['carsForm'].addEventListener('submit', (event) => {
+            event.preventDefault();
+            fetch(event.target.action, {
+                method: 'PUT',
+                body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+            })
+            .then((resp) => resp.json())
+            .then((body) => {
+                alert("Update succeeded");
+                window.location.href = "/cars";
+            })
+            .catch((error) => {
+                alert("Update failed " + error);
+            });
+        });

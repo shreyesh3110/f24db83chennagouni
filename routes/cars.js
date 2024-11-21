@@ -1,61 +1,46 @@
-// var express = require('express');
-// const car_controlers= require('../controllers/car');
-// var router = express.Router();
- 
-//  /* GET kites page */
-//  router.get('/', function(req, res, next) {
-//    // Define the results array with cars information
-//    var results = [
-//        { car_name: 'Camry', model: 'sedan', power: 200 },
-//       { car_name: 'F150', model: 'truck', power: 800 },
-//      { car_name: 'Wrangler', model: 'SUV', power: 400 },
-//      { car_name: 'Audi', model: 'sedan', power: 200 }
-// ];
- 
-//    // Render the kites.pug template and pass the results array to it
-//    res.render('cars', { title: 'Search Results - Cars', results: results });
-//  });
-
-
-// /* GET Kettles. */
-// router.get('/', car_controlers.car_view_all_Page ); 
-// /* GET create kettle page */
-// router.get('/create', car_controlers.car_create_post);
-
-// module.exports = router;
-
 var express = require('express');
 var router = express.Router();
 var car_controller = require('../controllers/cars');
+
+// router.get('/', car_controller.car_list);
+
+// router.post('/', car_controller.car_create_post);
+
+// router.get('/:id', car_controller.car_detail);
+
+// // router.get('/:id', car_controller.car_update_get);
+
+// router.put('/cars:id', car_controller.car_update_put);
+
+// // router.get('/:id', car_controller.car_delete_get);
+
+// router.delete('car/:id', car_controller.car_delete);
+
+// /* GET detail car page */
+// router.get('/detail', car_controller.car_view_one_Page);
+
+// router.get('/cars:id', car_controller.car_detail);
 
 router.get('/', car_controller.car_list);
 
 router.post('/', car_controller.car_create_post);
 
-router.get('/:id', car_controller.car_detail);
+//router.get('/:id', car_controller.car_update_get);
 
-router.get('/:id', car_controller.car_update_get);
+//router.get('/:id', car_controller.car_delete_get);
 
-router.put('/:id', car_controller.car_update_put);
+router.put('/cars:id', car_controller.car_update_put);
 
-// router.get('/:id', car_controller.car_delete_get);
+router.delete('/cars:id', car_controller.car_delete);
 
-router.delete('/:id', car_controller.car_delete);
+router.get('/cars:id', car_controller.car_detail);
 
-/* GET detail car page */
 router.get('/detail', car_controller.car_view_one_Page);
 
+router.get('/create', car_controller.car_create_Page);
 
+router.get('/update', car_controller.car_update_Page);
 
-
-// router.post('/', car_controller.car_create_post);
-
-//router.get('/:id/update', car_controller.car_update_get);
-
-//router.get('/:id/delete', car_controller.car_delete_get);
-
-//router.post('/:id/update', car_controller.car_update_post);
-
-//router.post('/:id/delete', car_controller.car_delete_post);
+router.get('/delete', car_controller.car_delete_Page);
 
 module.exports = router;
