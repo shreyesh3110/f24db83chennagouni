@@ -103,6 +103,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 require('dotenv').config();
+var passport = require('passport');
 
 const connectionString = process.env.MONGO_CON;
 
@@ -126,6 +127,7 @@ var randomitemRouter = require('./routes/randomitem');
 var searchResultsRouter = require('./routes/searchresults');
 const resourceRouter = require('./routes/resource');
 const carsRouter = require('./routes/cars');
+var LocalStrategy = require('passport-local').Strategy;
 
 // Schema definition
 const carschema = new mongoose.Schema({
@@ -190,6 +192,7 @@ app.use('/grid', gridRouter);
 app.use('/random', randomitemRouter);    
 app.use('/searchresults', searchResultsRouter);
 app.use('/resource', resourceRouter);
+
 
 // Error handling
 app.use(function(req, res, next) {
