@@ -1,39 +1,49 @@
 //- extends layout
- 
+
 //- block content
-//-   //- Add a heading for the page
 //-   h1 Search Results for Cars
 
-//-   - var 
- 
-//-   div.container-fluid
-//-     div.row
-//-       //- Iterate over each item in results (passed from cars.js) and display in a col-sm-2 div
-//-       each car in results
+//-   .container-fluid
+//-     .row
+//-       each item in results
 //-         div.col-sm-3
-//-           h5 Car name: #{car.car_name}
-//-           p Model: #{car.model}
-//-           p power: #{car.power} HP
+//-           h3 #{item.car_name}
+//-           p Model: #{item.model}
+//-           p Power: #{item.power}
+//-           a(href=`/cars/${item._id}`) Inspect
+//-           a(href=`/cars/${item._id}/update`) Update
+//-           a(href=`/cars/${item._id}/delete`) Delete
+  
+//-   a(href='/cars/create') Add New Car
+
+//-   script.
+//-     function buy(index) {
+//-       alert(`You purchased item ${index}`);
+//-     }
+
+//-   - let items = results;
+//-   div(class="container-fluid")
+//-     div(class="row")
+//-       each item in items
+//-         div(class="row-sm-2", class="m-1") Item #{item.car_name}(#{item.model}) is #{item.power}
 
 extends layout
-
+ 
 block content
-  h1 Search Results for Cars
-
-  .container-fluid
-    .row
-      each item in results
-        div.col-sm-3
-          h3 #{item.car_name}
-          p Model: #{item.model}
-          p Power: #{item.power}
-          a(href=`/cars/${item._id}`) Inspect
-          a(href=`/cars/${item._id}/update`) Update
-          a(href=`/cars/${item._id}/delete`) Delete
-  
-  a(href='/cars/create') Add New Car
-
+  h1 Results for Cars
+  - let items = results
+  div(class="container-fluid")
+    div(class="col m-1")
+      each item in items
+        - let destination = `dispatch(\"/cars/update?id=${item._id}\")`
+        - let destination1 = `dispatch(\"/cars/detail?id=${item._id}\")`
+        - let destination2 = `dispatch(\"/cars/delete?id=${item._id}\")`
+        div(class="row-sm-2", class="m-1") Item #{item.car_name}(#{item.model}) is #{item.power}
+        button.btn( class="btn-primary m-1", onclick= destination) Update
+        br
+        br
+       
   script.
-    function buy(index) {
-      alert(`You purchased item ${index}`);
+    function dispatch(path){
+      window.location.href=path
     }
