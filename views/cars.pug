@@ -1,49 +1,44 @@
+
 //- extends layout
-
+ 
 //- block content
-//-   h1 Search Results for Cars
-
-//-   .container-fluid
-//-     .row
-//-       each item in results
-//-         div.col-sm-3
-//-           h3 #{item.car_name}
-//-           p Model: #{item.model}
-//-           p Power: #{item.power}
-//-           a(href=`/cars/${item._id}`) Inspect
-//-           a(href=`/cars/${item._id}/update`) Update
-//-           a(href=`/cars/${item._id}/delete`) Delete
-  
-//-   a(href='/cars/create') Add New Car
-
+//-   h1 Results for Cars
+//-   - let items = results
+//-   div(class="container-fluid")
+//-     div(class="col m-1")
+//-       each item in items
+//-         - let destination = `dispatch(\"/cars/update?id=${item._id}\")`
+//-         - let destination1 = `dispatch(\"/cars/detail?id=${item._id}\")`
+//-         - let destination2 = `dispatch(\"/cars/delete?id=${item._id}\")`
+//-         div(class="row-sm-2", class="m-1") Item #{item.car_name}(#{item.model}) is #{item.power}
+//-         button.btn( class="btn-primary m-1", onclick= destination) Update
+//-         br
+//-         br
+       
 //-   script.
-//-     function buy(index) {
-//-       alert(`You purchased item ${index}`);
+//-     function dispatch(path){
+//-       window.location.href=path
 //-     }
 
-//-   - let items = results;
-//-   div(class="container-fluid")
-//-     div(class="row")
-//-       each item in items
-//-         div(class="row-sm-2", class="m-1") Item #{item.car_name}(#{item.model}) is #{item.power}
-
 extends layout
- 
+
 block content
-  h1 Results for Cars
-  - let items = results
+  h1 Search Results - Cars
+  button.btn(class="btn-primary m-1", onclick="window.location.href='/inventions/create'") Create
+  - let items = results;
+
   div(class="container-fluid")
-    div(class="col m-1")
+    div(class="row m-1")
       each item in items
-        - let destination = `dispatch(\"/cars/update?id=${item._id}\")`
-        - let destination1 = `dispatch(\"/cars/detail?id=${item._id}\")`
-        - let destination2 = `dispatch(\"/cars/delete?id=${item._id}\")`
-        div(class="row-sm-2", class="m-1") Item #{item.car_name}(#{item.model}) is #{item.power}
-        button.btn( class="btn-primary m-1", onclick= destination) Update
-        br
-        br
-       
+        - let detailDestination = `dispatch(\"/cars/detail?id=${item._id}\")`
+        - let deleteDestination = `dispatch(\"/cars/delete?id=${item._id}\")`
+        div(class="row-sm-2", class="m-1") Car  #{item.car_name}(#{item.model}) is #{item.power}
+          button.btn(class="btn-primary m-1", onclick=detailDestination) Detail
+          button.btn(class="btn-danger m-1", onclick=deleteDestination) Delete
+          - let updateDestination = `dispatch(\"/cars/update?id=${item._id}\")`
+          button.btn( class="btn-primary m-1", onclick= updateDestination) Update
+
   script.
-    function dispatch(path){
+    function dispatch(path){ 
       window.location.href=path
     }
